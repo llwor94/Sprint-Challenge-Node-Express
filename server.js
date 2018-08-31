@@ -12,8 +12,8 @@ server.use(express.json());
 server.use(cors());
 server.use(morgan('dev'));
 
-server.use('./actions', actionRouters);
-server.use('./projects', projectRouters);
+server.use('/actions', actionRouters);
+server.use('/projects', projectRouters);
 
 server.use(errorHandler);
 

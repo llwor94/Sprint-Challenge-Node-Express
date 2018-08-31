@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
 
 const db = require('../data/helpers/actionModel');
+const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
@@ -15,11 +15,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     let data = await db.get(req.params.id);
-    if (data) {
-      return res.status(200).json(data);
-    } else {
-      next({ statusCode: 404 });
-    }
+    return res.status(200).json(data);
   } catch (err) {
     next(err);
   }
