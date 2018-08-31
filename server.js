@@ -30,7 +30,10 @@ function errorHandler(err, req, res, next) {
         message: 'The requested file does not exist.',
       });
       break;
-
+    case 400:
+      res.status(400).json({
+        message: 'There was an error regarding your input',
+      });
     default:
       res.status(500).json({
         message: 'There was an error performing the required operation',
