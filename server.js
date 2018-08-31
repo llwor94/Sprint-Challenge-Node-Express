@@ -15,8 +15,28 @@ server.use(morgan('dev'));
 server.use('./actions', actionRouters);
 server.use('./projects', projectRouters);
 
+server.use(errorHandler);
+
 server.get('/', (req, res) => {
   res.send('Sup fam');
 });
+
+function errorHandler(err, req, res, next) {
+  console.log(err);
+
+  switch (err.statusCode) {
+    case 404:
+      res.status(404).json({
+        message: 'The requested file does not exist.',
+      });
+      break;
+
+    default:
+      res.status(500).json({
+        message: 'There was an error performing the required operation',
+      });
+      break;
+  }
+}
 
 server.listen(7000, () => console.log('ya made it mon'));
