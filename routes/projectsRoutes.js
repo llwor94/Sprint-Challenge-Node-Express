@@ -21,6 +21,15 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.get('/:id/actions', async (req, res, next) => {
+  try {
+    let data = await db.getProjectActions(req.params.id);
+    res.status(200).json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/', mw.dataCheck, async (req, res, next) => {
   let body = req.body;
   try {
