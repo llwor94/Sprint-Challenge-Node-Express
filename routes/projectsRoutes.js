@@ -30,7 +30,7 @@ router.get('/:id/actions', async (req, res, next) => {
   }
 });
 
-router.post('/', mw.dataCheck, async (req, res, next) => {
+router.post('/', mw.projects, async (req, res, next) => {
   let body = req.body;
   try {
     let data = await db.insert(body);
@@ -40,7 +40,7 @@ router.post('/', mw.dataCheck, async (req, res, next) => {
   }
 });
 
-router.put('/:id', mw.dataCheck, async (req, res, next) => {
+router.put('/:id', mw.projects, async (req, res, next) => {
   let body = req.body;
   try {
     let data = await db.update(req.params.id, body);
