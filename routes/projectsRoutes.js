@@ -44,4 +44,16 @@ router.put('/:id', mw.dataCheck, async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+    let data = await db.remove(req.params.id);
+    if (data) {
+      return res.status(200).json({ id: req.params.id });
+    }
+    next({ statusCode: 404 });
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
