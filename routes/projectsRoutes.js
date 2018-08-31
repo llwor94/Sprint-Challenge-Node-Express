@@ -1,6 +1,6 @@
 const express = require('express');
+const mw = require('../middleware');
 const router = express.Router();
-
 const db = require('../data/helpers/projectModel');
 
 router.get('/', async (req, res, next) => {
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', mw.dataCheck, async (req, res, next) => {
   let body = req.body;
   try {
     let data = await db.insert(body);
@@ -31,13 +31,17 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-const dataCheck = (req, res, next) => {
+router.put('/:id', mw.dataCheck, async (req, res, next) => {
   let body = req.body;
-  if (!(body.name && body.description)) {
-    next({ statusCode: 400 });
+  try {
+    let data = await db.update(req.params.id, body);
+    if (!data) {
+      return next({ statusCode: 404 });
+    }
+    res.status(200).json(data);
+  } catch (err) {
+    next(err);
   }
-  if (body.name.length > 128) {
-    next({ statusCode: 400 });
-  }
-};
+});
+
 module.exports = router;

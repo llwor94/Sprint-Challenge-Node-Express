@@ -32,7 +32,7 @@ function errorHandler(err, req, res, next) {
       break;
     case 400:
       res.status(400).json({
-        message: 'There was an error regarding your input',
+        message: 'There was an error regarding your input.',
       });
     default:
       res.status(500).json({
